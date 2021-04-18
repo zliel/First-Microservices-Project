@@ -9,8 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MusicReviewServiceApplication {
 
 	@Bean
-	public WebClient getWebClient() {
-		return WebClient.create();
+	public WebClient.Builder getWebClientBuilder() {
+		return WebClient.builder();
 	}
 
 	public static void main(String[] args) {
