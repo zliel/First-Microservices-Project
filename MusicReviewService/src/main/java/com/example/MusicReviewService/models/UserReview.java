@@ -1,15 +1,17 @@
 package com.example.MusicReviewService.models;
 
-import reactor.core.publisher.Flux;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserReview {
     private String userId;
-//    private Composition composition;
-    private Flux<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
-    public UserReview(String userId, /*Composition composition,*/ Flux<Review> reviews) {
+    public UserReview() {
+    }
+
+    public UserReview(String userId, List<Review> reviews) {
         this.userId = userId;
-//        this.composition = composition;
         this.reviews = reviews;
     }
 
@@ -21,19 +23,20 @@ public class UserReview {
         this.userId = userId;
     }
 
-//    public Composition getComposition() {
-//        return composition;
-//    }
-//
-//    public void setComposition(Composition composition) {
-//        this.composition = composition;
-//    }
 
-    public Flux<Review> getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(Flux<Review> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    @Override
+    public String toString() {
+        return "UserReview{" +
+                "userId='" + userId + '\'' +
+                ", reviews=" + reviews +
+                '}';
     }
 }

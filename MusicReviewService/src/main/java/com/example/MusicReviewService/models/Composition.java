@@ -5,6 +5,9 @@ public class Composition {
     private String name;
     private String composer;
 
+    public Composition() {
+    }
+
     public Composition(String compositionId, String name, String composer) {
         this.compositionId = compositionId;
         this.name = name;
@@ -33,5 +36,14 @@ public class Composition {
 
     public void setComposer(String composer) {
         this.composer = composer;
+    }
+
+    @Override
+    public String toString() {
+        return "Composition{" +
+                "compositionId='" + compositionId + '\'' +
+                ", name='" + name + '\'' +
+                ", composer='" + composer + '\'' +
+                '}';
     }
 }

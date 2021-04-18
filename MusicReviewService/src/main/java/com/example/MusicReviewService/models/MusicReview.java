@@ -7,6 +7,9 @@ public class MusicReview { // Equivalent to koushikkothagal's "Catalog Item"
     private String review;
     private int rating;
 
+    public MusicReview() {
+    }
+
     public MusicReview(String name, String composerName, String review, int rating) {
         this.name = name;
         this.composerName = composerName;
@@ -44,5 +47,15 @@ public class MusicReview { // Equivalent to koushikkothagal's "Catalog Item"
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "MusicReview{" +
+                "name='" + name + '\'' +
+                ", composerName='" + composerName + '\'' +
+                ", review='" + review + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }

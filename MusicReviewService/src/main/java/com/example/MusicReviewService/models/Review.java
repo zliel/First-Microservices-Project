@@ -6,6 +6,8 @@ public class Review {
     private String review;
     private int rating;
 
+    public Review() { }
+
     public Review(String compositionId, String review, int rating) {
         this.compositionId = compositionId;
         this.review = review;
@@ -34,5 +36,14 @@ public class Review {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "compositionId='" + compositionId + '\'' +
+                ", review='" + review + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }
