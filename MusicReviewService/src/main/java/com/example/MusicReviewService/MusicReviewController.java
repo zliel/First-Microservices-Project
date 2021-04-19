@@ -20,9 +20,6 @@ public class MusicReviewController {
 
     @GetMapping("/api/musicReview/{userId}")
     public Flux<MusicReview> getMusicReview(@PathVariable("userId") String userId) {
-        // This will come from a webClient request using the Review.getCompositionId() method (will be inside the return statement
-        Composition testComposition = new Composition("test1", "Nocturne No. 0", "Choppin");
-
         // ORDER:
         //      UserReview
         //      return Flux.from(UserReview.getReviews()).map(.
@@ -39,10 +36,18 @@ public class MusicReviewController {
         Flux<Review> reviews = userReviewMono.flatMapIterable(UserReview::getReviews);
 
         // map over our list, creating new MusicReview instances from each review and storing them inside a Flux, which we return
-        return reviews.map(review -> {
-            System.out.println(review);
+        return reviews.flatMap(review -> {
+            // Retrieve the Mono<Composition> using a WebClient call to our Composition Service with the composition ID from the current review
+            Mono<Composition> composition = webClientBuilder.build().get().uri("http://localhost:8082/api/" + review.getCompositionId())
+                                                            .retrieve()
+                                                            .bodyToMono(Composition.class);
 
-            return new MusicReview(testComposition.getName(), testComposition.getComposer(), review.getReview(), review.getRating());
+            // Map over the returned Mono<Composition>, creating a new MusicReview instance, and using the properties from the
+            // current composition and review to create and return a new MusicReview (stored in a Mono). Because we used flatMap(), this
+            // will be flattened into a Flux<MusicReview>
+            return composition.map(
+                    comp -> new MusicReview(comp.getName(), comp.getComposer(), review.getReview(), review.getRating())
+            );
         });
     }
 }
