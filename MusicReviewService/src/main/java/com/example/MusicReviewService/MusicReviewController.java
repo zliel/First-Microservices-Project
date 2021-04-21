@@ -28,7 +28,7 @@ public class MusicReviewController {
         //      );
 
         // Make a WebClient request to the UserReviewService using the given userId and retrieve a Mono containing the user's reviews
-        Mono<UserReview> userReviewMono = webClientBuilder.build().get().uri("http://localhost:8083/api/userReview/" + userId)
+        Mono<UserReview> userReviewMono = webClientBuilder.build().get().uri("http://user-review-service/api/userReview/" + userId)
                                          .retrieve()
                                          .bodyToMono(UserReview.class);
 
@@ -38,7 +38,7 @@ public class MusicReviewController {
         // map over our list, creating new MusicReview instances from each review and storing them inside a Flux, which we return
         return reviews.flatMap(review -> {
             // Retrieve the Mono<Composition> for our MusicReview instances using a WebClient call to our Composition Service with the composition ID from the current review
-            Mono<Composition> composition = webClientBuilder.build().get().uri("http://localhost:8082/api/" + review.getCompositionId())
+            Mono<Composition> composition = webClientBuilder.build().get().uri("http://composition-service/api/" + review.getCompositionId())
                                                             .retrieve()
                                                             .bodyToMono(Composition.class);
 
