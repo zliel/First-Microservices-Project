@@ -2,6 +2,7 @@ package com.example.UserReviewService;
 
 import com.example.UserReviewService.models.Review;
 import com.example.UserReviewService.models.UserReview;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,13 +12,15 @@ import reactor.core.publisher.Mono;
 
 @RestController
 public class UserReviewServiceController {
+    @Autowired
+    WebClient.Builder webClientBuilder;
 
     @GetMapping("/api/userReview/{userId}")
     public Mono<UserReview> getUserReview(@PathVariable("userId") String userId) {
-        WebClient.Builder wcb = WebClient.builder();
 
-        Flux<Review> reviews = wcb.build().get()
-                .uri("http://localhost:8083/flux")
+
+        Flux<Review> reviews = webClientBuilder.build().get()
+                .uri("http://user-review-service/flux")
                 .retrieve()
                 .bodyToFlux(Review.class);
 
